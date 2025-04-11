@@ -1,0 +1,182 @@
+/* 모달 오버레이 --------------------------------------------------*/
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* 모달 박스 ------------------------------------------------------*/
+.modal {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px 28px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  width: 320px;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+}
+
+.modal.wide {
+  width: 680px;
+}
+
+.modal h3 {
+  margin: 0 0 20px 0;
+  font-weight: 600;
+  font-size: 20px;
+  color: #111;
+  text-align: center;
+}
+
+/* 모달 바디 ------------------------------------------------------*/
+.modal-body {
+  display: flex;
+  gap: 24px;
+}
+
+/* mini‑map -------------------------------------------------------*/
+.modal-body canvas {
+  width: 400px;
+  height: 400px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+/* 폼 ------------------------------------------------------------*/
+.task-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.task-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  color: #555;
+  gap: 6px;
+}
+
+.task-form input,
+.task-form select {
+  appearance: none;
+  padding: 8px 10px;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fdfdfd;
+  transition: border 0.15s;
+}
+
+.task-form input:focus,
+.task-form select:focus {
+  outline: none;
+  border-color: #007aff;
+}
+
+/* Step 영역 ------------------------------------------------------*/
+.step-area {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.step-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+}
+
+.step-head button {
+  padding: 4px 10px;
+  border: 1px solid #c8c8c8;
+  border-radius: 6px;
+  background: #f8f8f8;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.step-head button:hover {
+  background: #ededed;
+}
+
+.step-row {
+  display: flex;
+  gap: 6px;
+}
+
+.step-row select,
+.step-row input {
+  flex: 1;
+}
+
+/* 액션 버튼 ------------------------------------------------------*/
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.modal-actions button {
+  padding: 8px 18px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.modal-actions button[type="button"] {
+  background: #e5e5e5;
+  color: #333;
+}
+
+.modal-actions button[type="submit"] {
+  background: #007aff;
+  color: #fff;
+}
+
+.modal-actions button:hover {
+  opacity: 0.88;
+}
+
+.task-form input[type="checkbox"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #d0d0d0;
+  border-radius: 3px;
+  background: #fdfdfd;
+  vertical-align: middle;
+  cursor: pointer;
+  position: relative;
+}
+
+/* 체크된 상태 스타일 */
+.task-form input[type="checkbox"]:checked {
+  background: #007aff;
+  border-color: #007aff;
+}
+
+/* 체크 마크 표시 (예시) */
+.task-form input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}

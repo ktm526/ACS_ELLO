@@ -1,0 +1,92 @@
+.task-list-item {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e9e9ed;
+  background-color: #fafbfb;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.task-item-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  height: 70px;
+}
+
+.task-item-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.task-main {
+  font-weight: bold;
+  color: #000;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.task-status {
+  color: #6e7380;
+  font-size: 14px;
+}
+
+.task-item-right {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.assigned-robot {
+  font-size: 14px;
+  color: #999;
+  margin-right: 8px;
+}
+
+.delete-button,
+.toggle-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.delete-button:hover {
+  transform: scale(1.1);
+}
+.delete-button:hover img {
+  filter: brightness(0) saturate(100%) invert(22%) sepia(70%) saturate(3284%)
+    hue-rotate(346deg) brightness(94%) contrast(89%);
+}
+
+.toggle-button:hover {
+  transform: scale(1.1);
+}
+.toggle-button:active {
+  transform: scale(1);
+}
+.toggle-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.toggle-icon.rotated {
+  transform: rotate(180deg);
+}
+
+.task-extra-info-wrapper {
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  margin: 0 16px;
+}
+.task-extra-info {
+  padding: 10px 0;
+  border-top: 1px solid #e9e9ed;
+  font-size: 14px;
+  color: #333;
+}

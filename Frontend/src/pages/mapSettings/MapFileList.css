@@ -1,0 +1,123 @@
+/* MapFileList.css */
+
+.map-file-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.map-file-list-header .header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.map-file-list-header h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+  line-height: 32px;
+}
+
+.upload-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #192bb4;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 10px;
+}
+
+.upload-button:hover {
+  background-color: #14208a;
+}
+
+.upload-button svg {
+  fill: white;
+}
+
+.button-text {
+  font-size: 12px;
+}
+
+.map-file-list-content {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.map-file-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.map-file-item {
+  display: flex;
+  align-items: center;
+  background-color: #fafbfb;
+  border: 1px solid #e9e9ed;
+  border-radius: 12px;
+  padding: 12px 16px;
+  transition: background-color 0.3s ease;
+  height: 80px;
+}
+
+.map-file-item:hover {
+  background-color: #f0f2f5;
+}
+
+.map-file-icon {
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+.map-file-info {
+  flex-grow: 1;
+  margin-left: 12px;
+}
+
+.map-file-name {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.map-file-date {
+  font-size: 14px;
+  color: #6e7380;
+  margin: 4px 0 0;
+}
+
+.map-file-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.map-file-actions button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  transition: transform 0.2s ease;
+}
+
+.map-file-actions button:hover {
+  transform: scale(1.1);
+  fill: #192bb4;
+}
+
+.viewer-button:hover svg path {
+  fill: #192bb4;
+}
