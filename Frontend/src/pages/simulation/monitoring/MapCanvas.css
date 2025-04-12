@@ -1,0 +1,14 @@
+/* src/pages/simulation/monitoring/MapCanvas.css */
+.map-canvas-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.map-canvas {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ccc;
+  display: block;
+}

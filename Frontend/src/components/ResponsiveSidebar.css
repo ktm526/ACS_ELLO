@@ -1,0 +1,288 @@
+:root {
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 60px;
+}
+
+/* Mobile Navbar */
+.mobile-navbar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #fff;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1100;
+  padding: 0 20px;
+}
+
+.mobile-navbar .hamburger {
+  position: absolute;
+  left: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobile-navbar .hamburger .hamburger-line {
+  width: 28px;
+  height: 3px;
+  background-color: #333;
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+}
+
+.mobile-navbar .mobile-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: navy; */
+}
+
+.mobile-navbar .mobile-logo-img {
+  height: 30px;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 1050;
+}
+
+.mobile-menu.open {
+  display: block;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-menu li {
+  margin-bottom: 15px;
+}
+
+.mobile-menu a {
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  font-weight: 400;
+  display: block;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.mobile-menu a:hover {
+  background-color: rgba(0, 122, 255, 0.1);
+  color: #007aff;
+}
+
+.mobile-menu .logout-button {
+  background-color: #007aff;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.mobile-menu .logout-button:hover {
+  background-color: #005bb5;
+  transform: translateY(-2px);
+}
+
+/* Desktop Sidebar */
+.desktop-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: #fff;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  transition: width 0.3s ease;
+  z-index: 1000;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* collapsed 상태일 때 폭 변경 */
+.desktop-sidebar.collapsed {
+  width: var(--sidebar-collapsed-width);
+}
+
+/* 로고 영역: 항상 상단 */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+/* 로고 이미지: expanded일 때만 보임 */
+.logo-img {
+  height: 40px;
+  transition: opacity 0.3s ease;
+  /* background-color: navy; */
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
+  flex-grow: 1;
+  cursor: default;
+  height: 100%;
+  position: relative;
+}
+
+/* Sidebar Nav */
+.sidebar-nav ul {
+  top: 25%;
+  position: absolute;
+  list-style: none;
+  padding: 20px;
+  width: 100%;
+}
+
+.sidebar-nav li {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.sidebar-nav a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* expanded일 때 왼쪽 정렬 */
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 40px;
+  width: 100%;
+}
+
+.sidebar-nav a:hover {
+  background-color: rgba(0, 122, 255, 0.1);
+  color: #007aff;
+}
+
+.menu-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: -3px;
+}
+
+.menu-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  color: #58606c;
+}
+
+/* Sidebar Bottom: 로그아웃 버튼 영역 */
+.sidebar-footer {
+  padding: 20px;
+  cursor: default;
+  position: absolute;
+  bottom: 80px;
+  width: 100%;
+}
+
+.logout-button {
+  display: none;
+  background-color: #58606c;
+  width: 100%;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  justify-content: center;
+}
+
+.logout-button:hover {
+  background-color: gray;
+  transform: translateY(-2px);
+}
+
+/* Desktop: collapsed 상태에서 텍스트 숨김 및 아이콘 중앙 정렬 */
+.desktop-sidebar.collapsed .menu-text,
+.desktop-sidebar.collapsed .sidebar-logo .logo-img {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.desktop-sidebar.collapsed .sidebar-nav a,
+.desktop-sidebar.collapsed .logout-button .menu-icon .sidebar-nav {
+  justify-content: center;
+  background-color: none;
+}
+.desktop-sidebar.collapsed .logout-button {
+  background-color: #fff;
+  margin-left: -5px;
+}
+.desktop-sidebar.collapsed .sidebar-nav a {
+  width: 35px;
+  padding-left: 21px;
+  margin-left: -7px;
+}
+
+/* Mobile: Hide desktop sidebar */
+@media (max-width: 767px) {
+  .desktop-sidebar {
+    display: none !important;
+  }
+}
+
+/* Desktop: Hide mobile elements */
+@media (min-width: 768px) {
+  .mobile-navbar,
+  .mobile-menu {
+    display: none !important;
+  }
+}
+
+/* Main container margin for desktop sidebar */
+@media (min-width: 768px) {
+  .main-container {
+    margin-left: var(--sidebar-width);
+  }
+}
+@media (min-width: 768px) {
+  .main-container {
+    margin-left: var(--current-sidebar-width);
+    transition: margin-left 0.3s ease;
+  }
+}

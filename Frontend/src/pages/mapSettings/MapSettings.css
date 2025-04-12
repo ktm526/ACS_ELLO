@@ -1,0 +1,37 @@
+.map-settings-container {
+  display: flex;
+  margin: 30px;
+  gap: 20px;
+  background-color: #f5f5f5;
+  width: calc(100% - 60px);
+  height: calc(100vh - 60px);
+}
+
+.map-file-list-section {
+  flex: 2;
+  height: 100%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
+  overflow: auto;
+}
+
+.robot-map-setter-section {
+  flex: 1;
+  height: 100%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
+  overflow: auto;
+}
+
+@media (max-width: 767px) {
+  .map-settings-container {
+    flex-direction: column;
+  }
+  .map-file-list-section {
+    border-bottom: 1px solid #e0e0e0;
+  }
+}

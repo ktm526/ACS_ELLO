@@ -1,0 +1,214 @@
+/* src/pages/MapViewer.css */
+
+/* 1. 최상위 MapViewer 영역을 flex 컬럼으로, 100% 높이 */
+.map-viewer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* 2. 헤더 스타일 */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-left h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: #1f2937;
+}
+
+.header-icon {
+  display: block;
+}
+
+/* 3. 맵 선택 드롭다운 */
+.map-selector {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  color: gray;
+  border: 1px solid lightgray;
+  padding: 4px;
+  margin-left: -8px;
+}
+
+.map-selector select {
+  padding: 6px 8px;
+  font-size: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 20px;
+  background-color: #ffffff;
+  color: #111827;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.map-selector select:focus {
+  outline: none;
+  border-color: red;
+}
+
+/* 4. 캔버스 컨테이너: 헤더 아래 남은 공간을 모두 차지 */
+.canvas-container {
+  flex: 1;
+  overflow: hidden;
+  margin-top: -10px;
+  border-radius: 12px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* 5. 캔버스 자체 스타일 */
+.canvas-container canvas {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 6. 드래그 중일 때 커서 변경 */
+.canvas-container canvas:active {
+  cursor: grabbing;
+}
+
+/* MapViewer.css (추가) */
+.settings-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.settings-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+}
+
+.settings-modal .modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.settings-modal .modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 260px;
+  padding: 20px;
+  border-radius: 8px;
+  background: #fff;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settings-modal label {
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.settings-modal input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+
+.close-btn {
+  align-self: center;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  border: none;
+  color: black;
+  margin-top: 10px;
+  font-weight: 400;
+}
+
+.close-btn:hover {
+  background-color: #192bb4;
+  color: white;
+}
+
+/* 툴팁 (로봇 이름) */
+.tooltip {
+  position: fixed;
+  background: rgba(60, 60, 60, 0.9);
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+/* 컨텍스트 메뉴 (스테이션 우클릭) */
+.context-menu {
+  position: fixed;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+.context-menu button {
+  display: block;
+  background: none;
+  border: none;
+  width: 180px;
+  padding: 6px 12px;
+  text-align: left;
+  cursor: pointer;
+}
+.context-menu button:hover {
+  background: #f0f0f0;
+}
+
+/* 설정 모달 */
+.settings-modal .modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 900;
+}
+.settings-modal .modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.settings-modal label {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 14px;
+}
+.settings-modal input {
+  width: 80px;
+}
+.settings-modal .close-btn {
+  align-self: flex-end;
+  padding: 6px 12px;
+}

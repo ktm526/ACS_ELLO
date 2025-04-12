@@ -1,0 +1,105 @@
+/* src/pages/simulation/monitoring/AMRListItem.css */
+.amr-list-item {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e9e9ed;
+  background-color: #fafbfb;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+/* 메인 콘텐츠 영역 (고정 높이 80px) */
+.amr-item-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+
+/* 왼쪽 영역 */
+.amr-item-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.amr-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  margin: 6px;
+  margin-left: 16px;
+}
+
+.amr-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.amr-name {
+  font-weight: bold;
+  color: #000;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.amr-status {
+  color: #6e7380;
+  font-size: 14px;
+}
+
+/* 오른쪽 영역 */
+.amr-item-right {
+  display: flex;
+  gap: 10px;
+  margin-right: 10px;
+}
+
+.delete-button,
+.toggle-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+/* 삭제 버튼 호버 효과: 커지면서 아이콘 색상이 붉게 변함 */
+.delete-button:hover {
+  transform: scale(1.1);
+}
+.delete-button:hover img {
+  /* 이 예시는 필터를 사용하지만, svgr로 인라인 컴포넌트를 사용하면 CSS에서 fill 변경 가능 */
+  filter: brightness(0) saturate(100%) invert(22%) sepia(70%) saturate(3284%)
+    hue-rotate(346deg) brightness(94%) contrast(89%);
+}
+
+/* 토글 버튼 호버 및 회전 효과 */
+.toggle-button:hover {
+  transform: scale(1.1);
+}
+.toggle-button:active {
+  transform: scale(1);
+}
+.toggle-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.toggle-icon.rotated {
+  transform: rotate(180deg);
+}
+
+/* 확장용 추가 정보 영역 */
+.amr-extra-info-wrapper {
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.amr-extra-info {
+  padding: 10px;
+  border-top: 1px solid #e9e9ed;
+  font-size: 14px;
+  color: #333;
+  margin-top: 10px;
+}

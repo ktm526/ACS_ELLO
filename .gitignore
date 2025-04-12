@@ -1,0 +1,4 @@
+core_server/node_modules
+Frontend/node_modules
+io_server/node_modules
+core_server/data/database.sqlite

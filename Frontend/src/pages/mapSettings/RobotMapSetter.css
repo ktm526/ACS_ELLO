@@ -1,0 +1,65 @@
+.robot-map-setter-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+}
+
+.list-header h2 {
+  margin: 0 0 0 6px;
+  font-size: 18px;
+}
+
+.robot-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 10px;
+}
+
+.robot-item {
+  padding: 12px 8px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  background-color: #fafbfb;
+  border: 1px solid #e9e9ed;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.robot-name {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.map-panel {
+  margin-top: 12px;
+  padding-left: 24px;
+  border-top: 1px solid lightgray;
+}
+
+.map-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+}
+
+.current-map {
+  color: #d12;
+  font-weight: 700;
+}
+
+.error {
+  color: #d12;
+}

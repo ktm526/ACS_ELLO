@@ -1,0 +1,7 @@
+pm2 start ecosystem.config.js          # 3 개 앱 동시 등록
+pm2 ls                                  # 상태 확인
+
+
+pm2 save                                # 현재 프로세스 목록 저장
+pm2 startup                             # 부트 스크립트 생성 (명령어 출력됨)
+sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u $USER --hp $HOME

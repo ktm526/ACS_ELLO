@@ -1,0 +1,115 @@
+/* 전체 컨테이너 스타일 */
+.amr-list-container {
+  background-color: #fff;
+  border-radius: 12px;
+}
+
+/* 헤더 영역: 왼쪽에 아이콘+제목, 오른쪽에 + 버튼 */
+.amr-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* 헤더 왼쪽 영역 */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-left .header-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 0px;
+}
+
+.header-left h2 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 32px;
+  color: #333;
+  margin: 0;
+}
+
+.header-right .plus-button {
+  background-color: transparent;
+  border: none;
+  color: #6b7280;
+  border-radius: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.header-right .plus-button:hover {
+  transform: scale(1.1);
+  color: #192bb4; /* SVG의 fill이 currentColor으로 설정되어 있으므로 이 값이 적용됩니다. */
+}
+
+.header-right .plus-button .plus-icon {
+  width: 24px;
+  height: 24px;
+  margin: 0 auto;
+}
+
+/* 리스트 영역: 리스트 항목 간 10px 간격, 스크롤 처리 */
+.amr-list-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding-right: 5px;
+  max-height: 320px;
+}
+
+/* 모달 오버레이 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* 모달 창 */
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 모달 내 폼 그룹 */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* 모달 액션 버튼들 */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
