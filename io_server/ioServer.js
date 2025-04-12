@@ -28,6 +28,8 @@ let serialCounter = 1;
 const MAP_REQ_ID = 0x0514;   // 1300
 const MAP_RES_ID = 0x2C24;   // 11300
 const PUSH_PORT = 19301;
+const MSG_TASK_MESSAGE = 0x1001; // 새 task 메시지 타입 (임의의 값)
+
 
 /* ───── 공통 미들웨어 ──────────────────────────────────── */
 app.use(cors());
@@ -302,7 +304,9 @@ function subscribePush(ip) {
                 status = '대기'
             } else if (json.status == 'stop') {
                 status = '정지'
-            } else {
+            }
+
+            else {
                 status = json.status;
             }
             robotLastReceived.set(name, Date.now());
@@ -325,16 +329,16 @@ function subscribePush(ip) {
             } catch (e) { console.error('[Push] forward error:', e.message); }
 
             /* ── task_status 처리 ─ */
-            const tStatus = json.task_status ?? json.taskStatus;
+            const tStatus = json.status;
             //console.log(tStatus)
             // console.log(tStatus);
-            if (typeof tStatus === 'number') {
+            if (tStatus) {
                 const sess = robotSessions.get(ip);
                 if (!sess) continue;
                 if (!sess.robotName) sess.robotName = name;
 
                 // RUNNING(2)인 경우: 시작 플래그 설정 및 바로 종료
-                if (tStatus === 2) {
+                if (tStatus === 'operating') {
                     if (!sess.started) {
                         console.log(`[Task ${sess.taskId}] ▶ RUNNING 시작`);
                         sess.started = true;
@@ -343,7 +347,8 @@ function subscribePush(ip) {
                 }
 
                 // 완료 신호 4가 중복 처리되지 않도록 함
-                if (tStatus === 4) {
+                // 완료 신호 4가 중복 처리되지 않도록 함
+                if (tStatus === 'complete') {
                     // 만약 이미 현재 인덱스의 완료를 처리했다면 무시
                     if (sess.lastProcessedIdx && sess.lastProcessedIdx >= sess.idx) {
                         console.log(`[Task ${sess.taskId}] 중복 완료 신호 무시됨`);
@@ -391,21 +396,50 @@ function subscribePush(ip) {
                                 updated_at: new Date()
                             })
                         ]);
+
+                        // 종료 메시지를 위한 payload 구성 (수신 측에서 요구하는 양식)
+                        const terminationPayload = {
+                            id: sess.route[sess.idx - 1] || '0',   // 마지막 목적지 값
+                            source_id: 'SELF_POSITION',
+                            task_id: String(sess.taskId),
+                            method: 'complete',
+                            skill_name: 'GotoSpecifiedPose'
+                        };
+
+                        // buildPacket 함수를 사용해 패킷 생성 (고정 헤더 포함)
+                        const serial = serialCounter = (serialCounter + 1) & 0xFFFF;
+                        const packet = buildPacket(MSG_TASK_MESSAGE, terminationPayload, serial);
+
+                        // 로봇에 종료 메시지를 전송하기 위해 새로운 소켓 연결 생성
+                        const termSock = net.createConnection({ host: sess.robotIp, port: NAV_PORT }, () => {
+                            if (!termSock.destroyed) {
+                                termSock.write(packet, () => {
+                                    console.log(`[Task ${sess.taskId}] 종료 메시지 전송 완료`);
+                                    termSock.end();
+                                });
+                            } else {
+                                console.log(`[Task ${sess.taskId}] 종료 메시지 전송용 소켓 연결 실패 (destroyed)`);
+                            }
+                        });
+                        termSock.setTimeout(20_000);
+                        termSock.on('error', e => console.error(`[Task ${sess.taskId}] TCP error during termination message: ${e.message}`));
+                        termSock.on('timeout', () => console.error(`[Task ${sess.taskId}] TCP timeout during termination message`));
                     }
-                } else if (tStatus === 5 || tStatus === 6) { // FAILED / CANCELED
-                    if (sess.socket && !sess.socket.destroyed) sess.socket.destroy();
-                    robotSessions.delete(sess.robotIp);
-                    await Promise.all([
-                        axios.post(`${CORE_URL}/api/robots`, {
-                            name,
-                            status: '오류',
-                            timestamp: new Date()
-                        }),
-                        axios.put(`${CORE_URL}/api/tasks/${sess.taskId}`, {
-                            status: '오류',
-                            updated_at: new Date()
-                        })
-                    ]);
+                }
+                else if (tStatus === 'pause' || tStatus === 'abort') { // FAILED / CANCELED
+                    // if (sess.socket && !sess.socket.destroyed) sess.socket.destroy();
+                    // robotSessions.delete(sess.robotIp);
+                    // await Promise.all([
+                    //     axios.post(`${CORE_URL}/api/robots`, {
+                    //         name,
+                    //         status: '오류',
+                    //         timestamp: new Date()
+                    //     }),
+                    //     axios.put(`${CORE_URL}/api/tasks/${sess.taskId}`, {
+                    //         status: '오류',
+                    //         updated_at: new Date()
+                    //     })
+                    // ]);
                 }
             }
 
@@ -447,6 +481,7 @@ app.post('/api/sendTask', async (req, res) => {
     const robot_ip = req.body.robot_ip || AMR_IP;
     const task = req.body.task;
     const robot_name = req.body.robot_name || task.robot_name || null;
+    console.log('sendTask')
 
     if (!task) {
         console.error('[sendTask] no task in body');
@@ -492,26 +527,31 @@ app.post('/api/sendTask', async (req, res) => {
     });
 });
 
-/* ──────────────────────────────────────────────────────────
-   4. (옵션) /ello/taskstart  ― 옛 단순 배열 전송 방식
-────────────────────────────────────────────────────────── */
-app.post('/ello/taskstart', async (req, res) => {
-    const { robot_ip, task } = req.body;
-    if (!robot_ip || !task) return res.status(400).json({ success: false, message: 'robot_ip & task required' });
-    const steps = typeof task.steps === 'string' ? JSON.parse(task.steps) : task.steps;
-    const routeSteps = steps.filter(s => s.stepType === '경로').map(s => Number(s.description));
-    const client = net.createConnection({ host: robot_ip, port: CMD_PORT }, () => {
-        client.write(JSON.stringify(routeSteps));
-    });
-    client.on('data', async data => {
-        let msg; try { msg = JSON.parse(data.toString()); } catch { client.end(); return; }
-        try {
-            await axios.post(`${CORE_URL}/api/tasks/updateStatus`, msg);
-        } catch (e) { console.error('updateStatus error:', e.message); }
+app.post('/api/taskMessage', async (req, res) => {
+    const taskMessage = req.body;
+    // 필수 key("method")가 포함되어 있는지 확인 (필요에 따라 추가 검증 가능)
+    if (!taskMessage || typeof taskMessage !== 'object' || !taskMessage.method) {
+        return res.status(400).json({ success: false, message: 'task message with method is required' });
+    }
+
+    // 대상 로봇 IP가 요청 본문에 있으면 사용, 아니면 기본 AMR_IP 사용
+    const targetIP = taskMessage.robot_ip || AMR_IP;
+    // serialCounter: 기존 코드의 serialCounter 변수를 사용하여 serial 번호 생성
+    const serial = serialCounter = (serialCounter + 1) & 0xFFFF;
+    // 패킷 생성: taskMessage 객체를 그대로 본문으로 사용
+    const packet = buildPacket(MSG_TASK_MESSAGE, taskMessage, serial);
+
+    // NAV_PORT: 19206 (ROS2 task 서버)
+    const client = net.createConnection({ host: targetIP, port: NAV_PORT }, () => {
+        client.write(packet);
+        console.log(`[API taskMessage] Sent task message packet to ${targetIP}:${NAV_PORT}`);
         client.end();
+        res.json({ success: true });
     });
-    client.on('error', e => console.error('taskstart TCP error:', e.message));
-    return res.json({ success: true, message: 'Task command sent' });
+    client.on('error', (err) => {
+        console.error(`[API taskMessage] TCP error: ${err.message}`);
+        res.status(500).json({ success: false, message: err.message });
+    });
 });
 
 app.get('/api/robot/:name/maps', async (req, res) => {

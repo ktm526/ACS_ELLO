@@ -50,21 +50,20 @@ async function resetStuckSendingTasks() {
     }
 }
 
-// ────────────────────── 완료 태스크 청소 ──────────────────────
 async function deleteExpiredCompletedTasks() {
     try {
         const threshold = new Date(Date.now() - COMPLETED_TTL);
         const deleted = await Task.destroy({
             where: {
-                status: 'completed',
+                status: { [Op.in]: ['completed', 'canceled'] },
                 updated_at: { [Op.lt]: threshold },
             },
         });
         if (deleted) {
-            console.log(`[Allocator] deleted ${deleted} completed tasks (>1 min old)`);
+            console.log(`[Allocator] deleted ${deleted} completed/canceled tasks (>1 min old)`);
         }
     } catch (err) {
-        console.error('[Allocator] error deleting completed tasks:', err.message);
+        console.error('[Allocator] error deleting completed/canceled tasks:', err.message);
     }
 }
 

@@ -16,7 +16,7 @@ import MapIcon from "../../assets/icons/map-settings.svg";
 import SettingsIcon from "../../assets/icons/settings.svg";
 import RobotIcon from "../../assets/arrow.png";
 
-const DEFAULT_SIZE_MM = { width: 800, height: 1200 };
+const DEFAULT_SIZE_MM = { width: 540, height: 620 };
 
 const MapViewer = () => {
   const { setStationList } = useContext(AppContext); // 🔹
